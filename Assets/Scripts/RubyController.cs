@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
+
+    Rigidbody2D rigidbody2d;
     // Start is called before the first frame update
     void Start()
     {
         // makes Unity render 10 frames/sec instead of default 60 frames/sec
         //QualitySettings.vSyncCount = 0;
         //Application.targetFrameRate = 10;
+
+        rigidbody2d = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -29,13 +33,15 @@ public class RubyController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Debug.Log($"(x,t): ({horizontal}, {vertical})");
-        Vector2 position = transform.position;
+        Vector2 position = rigidbody2d.position;
        
         // added Time.deltaTime to make sure movement based on units/seconds not frames/second
         // slightly change to movement code multiplies amount the GameObject moves by the value of the axis.
         position.x = position.x + 3f * horizontal * Time.deltaTime;
         position.y = position.y + 3f * vertical * Time.deltaTime;
         transform.position = position;
+
+        rigidbody2d.MovePosition(position);
 
     }
 }
